@@ -1,0 +1,15 @@
+FROM mcr.microsoft.com/acr/moby-cli:linux-latest
+
+# Retag image-1-tag to image-2-tag
+RUN docker tag imgscnrdevwus2acrmain01.azurecr.io/acr/moby-cli:version-1  imgscnrdevwus2acrmain01.azurecr.io/acr/moby-cli:version-2
+
+# Retag image:latest to image-1-tag
+RUN docker tag  imgscnrdevwus2acrmain01.azurecr.io/acr/moby-cli:latest-version  imgscnrdevwus2acrmain01.azurecr.io/acr/moby-cli:version-1
+
+# Login to your private registry
+#RUN docker login <your-private-registry>
+
+# Download the image from MCR into your private registry and tag it as image:latest
+RUN docker pull  mcr.microsoft.com/acr/moby-cli:linux-latest
+RUN docker tag mcr.microsoft.com/acr/moby-cli:linux-latest imgscnrdevwus2acrmain01.azurecr.io/acr/moby-cli:latest-version
+RUN docker push imgscnrdevwus2acrmain01.azurecr.io/acr/moby-cli:latest-version
